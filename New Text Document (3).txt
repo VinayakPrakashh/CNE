@@ -1,0 +1,242 @@
+package com.example.myapplication;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+public class MainActivity extends AppCompatActivity {
+    Button b1,c,br,act;
+    CheckBox sdp,cn;
+    RadioGroup rg;
+    RadioButton p,f;
+    ToggleButton tb1;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        b1=findViewById(R.id.button);
+        sdp=findViewById(R.id.sdp1);
+        cn=findViewById(R.id.cn1);
+        rg=findViewById(R.id.rg1);
+        c=findViewById(R.id.call);
+        br=findViewById(R.id.browser);
+        act=findViewById(R.id.activity);
+p=findViewById(R.id.pass);
+f=findViewById(R.id.fail);
+        tb1=findViewById(R.id.tb);
+        b1.setOnClickListener(v->{
+            String check="";
+            if(sdp.isChecked()){
+                check = check+sdp.getText().toString()+" ";
+            }
+            if(cn.isChecked()){
+                check = check+cn.getText().toString()+" ";
+            }
+            if(p.isChecked() || f.isChecked()){
+            int selectid=rg.getCheckedRadioButtonId();
+                p = findViewById(selectid);
+                check = check + p.getText().toString()+" ";
+            }
+            if(tb1.isChecked()){
+                check=check+tb1.getTextOn().toString()+" ";
+            }
+            else {
+                check=check+tb1.getTextOff().toString()+" ";
+            }
+
+            Toast.makeText(this, check, Toast.LENGTH_SHORT).show();
+        });
+        c.setOnClickListener(v->{
+            String num="9562765182";
+            Intent intent=new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+num));
+            startActivity(intent);
+        });
+        br.setOnClickListener(v->{
+            Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://"+"www.google.com"));
+            startActivity(intent);
+        });
+        act.setOnClickListener(v->{
+            Intent intent=new Intent(this,SecondActivity.class);
+            intent.putExtra("pass","hello");
+            startActivity(intent);
+        });
+    }
+}
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <CheckBox
+        android:id="@+id/sdp1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SDP"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/cn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sdp1" />
+
+
+    <RadioGroup
+        android:id="@+id/rg1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cn1">
+
+        <RadioButton
+            android:id="@+id/pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="passed"
+            tools:layout_editor_absoluteX="137dp"
+            tools:layout_editor_absoluteY="479dp" />
+
+        <RadioButton
+            android:id="@+id/fail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Failed"
+            tools:layout_editor_absoluteX="137dp"
+            tools:layout_editor_absoluteY="479dp" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rg1" />
+
+    <Button
+        android:id="@+id/call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="Call"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <ToggleButton
+        android:id="@+id/tb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ToggleButton"
+        android:textOff="OFF ANU"
+        android:textOn="ON ANU"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+         />
+
+    <Button
+        android:id="@+id/browser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="Open browser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/call" />
+
+    <Button
+        android:id="@+id/activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:text="Go to next activity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/browser" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
+
+public class SecondActivity extends AppCompatActivity {
+Button b1;
+ListView l1;
+String[] array={"mobile","iphone"};
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+        b1=findViewById(R.id.button2);
+        l1=findViewById(R.id.listview);
+        Intent intent=getIntent();
+       String t= intent.getStringExtra("pass");
+        Toast.makeText(this, t, Toast.LENGTH_SHORT).show();
+        b1.setOnClickListener(v->{
+            Intent intent2=new Intent(this,MainActivity.class);
+
+            startActivity(intent2);
+        });
+        ArrayAdapter arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,array);
+        l1.setAdapter(arrayAdapter);
+    }
+}
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondActivity">
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listview" />
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="409dp"
+        android:layout_height="417dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
